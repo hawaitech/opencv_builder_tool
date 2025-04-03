@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 set -ex
-ENV OPENCV_VERSION=4.x
-ENV OPENCV_PYTHON=4.x
 
 echo "Building opencv-python ${OPENCV_VERSION}"
 
@@ -30,7 +28,7 @@ git apply patches.diff || echo "failed to apply git patches"
 git diff
 
 # OpenCV looks for the cuDNN version in cudnn_version.h, but it's been renamed to cudnn_version_v8.h
-ln -s /usr/include/$(uname -i)-linux-gnu/cudnn_version_v*.h /usr/include/$(uname -i)-linux-gnu/cudnn_version.h
+#ln -s /usr/include/$(uname -i)-linux-gnu/cudnn_version_v*.h /usr/include/$(uname -i)-linux-gnu/cudnn_version.h
 
 # patches for FP16/half casts
 function patch_opencv()
