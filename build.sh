@@ -7,9 +7,9 @@ bash ./install_deps.sh
 
 cd /opt
 
-git clone --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv
-git clone --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv_contrib
-git clone --branch ${OPENCV_PYTHON} --recursive https://github.com/opencv/opencv-python
+git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv
+git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv_contrib
+git clone --depth 1 --branch ${OPENCV_PYTHON} --recursive https://github.com/opencv/opencv-python
 
 cd /opt/opencv-python/opencv
 git checkout --recurse-submodules ${OPENCV_VERSION}
@@ -77,9 +77,10 @@ export OPENCV_BUILD_ARGS="\
    -DWITH_TBB=ON \
    -DBUILD_TIFF=ON \
    -DBUILD_PERF_TESTS=OFF \
-   -DBUILD_TESTS=OFF"
+   -DBUILD_TESTS=OFF \
+   -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
-export CMAKE_ARGS="${OPENCV_BUILD_ARGS} -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv-python/opencv_contrib/modules"
+export CMAKE_ARGS="${OPENCV_BUILD_ARGS} -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv-python/opencv_contrib/modules -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
 pip3 wheel --wheel-dir=/opt --verbose .
 
@@ -99,6 +100,7 @@ cd /opt/opencv/build
 cmake \
     ${OPENCV_BUILD_ARGS} \
     -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib/modules \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     ../
 
 make -j$(nproc)
