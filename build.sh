@@ -11,9 +11,15 @@ git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/op
 git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv_contrib
 git clone --depth 1 --branch ${OPENCV_PYTHON} --recursive https://github.com/opencv/opencv-python
 
+cd /opt/opencv
+git apply opencv.patch || echo "failed to apply git patches to opencv"
+git diff
+
 cd /opt/opencv-python/opencv
 git checkout --recurse-submodules ${OPENCV_VERSION}
 cat modules/core/include/opencv2/core/version.hpp
+git apply opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
+git diff
 
 cd ../opencv_contrib
 git checkout --recurse-submodules ${OPENCV_VERSION}
@@ -77,8 +83,7 @@ export OPENCV_BUILD_ARGS="\
    -DWITH_TBB=ON \
    -DBUILD_TIFF=ON \
    -DBUILD_PERF_TESTS=OFF \
-   -DBUILD_TESTS=OFF \
-   -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+   -DBUILD_TESTS=OFF "
 
 export CMAKE_ARGS="${OPENCV_BUILD_ARGS} -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv-python/opencv_contrib/modules -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
