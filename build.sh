@@ -86,8 +86,13 @@ export OPENCV_BUILD_ARGS="\
    -DBUILD_TESTS=OFF "
 
 export CMAKE_ARGS="${OPENCV_BUILD_ARGS} -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv-python/opencv_contrib/modules -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+export CPLUS_INCLUDE_PATH="/opt/opencv-python/opencv_contrib/modules:/usr/local/lib/python3.12/dist-packages:/usr/local/lib/python3.12/dist-packages/numpy/core/include/"
+#export PATH=$PATH+":/opt/opencv-python/opencv_contrib/modules:/usr/local/lib/python3.12/dist-packages:/usr/local/lib/python3.12/dist-packages/numpy/core/include/"
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH+":/usr/local/lib/python3.12/dist-packages:/usr/local/lib/python3.12/dist-packages/numpy/core/include/"
+pip3 install --upgrade pip scikit-build cmake
 
-pip3 wheel --wheel-dir=/opt --verbose .
+pip3 wheel --wheel-dir=/opt --progress-bar on --no-build-isolation .
+#pip3 wheel --wheel-dir=/opt --verbose .
 
 ls /opt
 cd /
