@@ -12,13 +12,13 @@ git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/op
 git clone --depth 1 --branch ${OPENCV_PYTHON} --recursive https://github.com/opencv/opencv-python
 
 cd /opt/opencv
-git apply opencv.patch || echo "failed to apply git patches to opencv"
+git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv"
 git diff
 
 cd /opt/opencv-python/opencv
 git checkout --recurse-submodules ${OPENCV_VERSION}
 cat modules/core/include/opencv2/core/version.hpp
-git apply opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
+git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
 git diff
 
 cd ../opencv_contrib
