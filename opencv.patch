@@ -11,3 +11,4 @@ index 4fc80f5..56e49d6 100644
  cmake_policy(SET CMP0012 NEW)
  include("${CMAKE_HELPER_SCRIPT}")
  include("${OpenCV_SOURCE_DIR}/cmake/OpenCVUtils.cmake")
+~                                                            
