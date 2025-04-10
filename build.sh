@@ -21,24 +21,21 @@ git checkout --recurse-submodules ${OPENCV_VERSION}
 cd ../opencv_extra
 git checkout --recurse-submodules ${OPENCV_VERSION}
 
-cd ../
-
 # apply patches to setup.py
+cd /opt/opencv-python
 git apply patches.diff || echo "failed to apply git patches"
-git diff
 
 #HawAI Patches
 cd /opt/opencv
 git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv"
-git diff
 cd /opt/opencv-python/opencv
 git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
-git diff
 
 # OpenCV looks for the cuDNN version in cudnn_version.h, but it's been renamed to cudnn_version_v8.h
 #ln -s /usr/include/$(uname -i)-linux-gnu/cudnn_version_v*.h /usr/include/$(uname -i)-linux-gnu/cudnn_version.h
 
 # patches for FP16/half casts
+cd /opt
 function patch_opencv()
 {
     sed -i 's|weight != 1.0|(float)weight != 1.0f|' opencv/modules/dnn/src/cuda4dnn/primitives/normalize_bbox.hpp
