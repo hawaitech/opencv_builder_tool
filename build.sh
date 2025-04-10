@@ -11,16 +11,9 @@ git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/op
 git clone --depth 1 --branch ${OPENCV_VERSION} --recursive https://github.com/opencv/opencv_contrib
 git clone --depth 1 --branch ${OPENCV_PYTHON} --recursive https://github.com/opencv/opencv-python
 
-cd /opt/opencv
-git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv"
-git diff
-
 cd /opt/opencv-python/opencv
-git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
-git diff
 git checkout --recurse-submodules ${OPENCV_VERSION}
 cat modules/core/include/opencv2/core/version.hpp
-
 
 cd ../opencv_contrib
 git checkout --recurse-submodules ${OPENCV_VERSION}
@@ -32,6 +25,14 @@ cd ../
 
 # apply patches to setup.py
 git apply patches.diff || echo "failed to apply git patches"
+git diff
+
+#HawAI Patches
+cd /opt/opencv
+git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv"
+git diff
+cd /opt/opencv-python/opencv
+git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
 git diff
 
 # OpenCV looks for the cuDNN version in cudnn_version.h, but it's been renamed to cudnn_version_v8.h
