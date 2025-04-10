@@ -16,10 +16,11 @@ git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git pat
 git diff
 
 cd /opt/opencv-python/opencv
-git checkout --recurse-submodules ${OPENCV_VERSION}
-cat modules/core/include/opencv2/core/version.hpp
 git apply /git/opencv_builder_tool/opencv.patch || echo "failed to apply git patches to opencv in opencv-python"
 git diff
+git checkout --recurse-submodules ${OPENCV_VERSION}
+cat modules/core/include/opencv2/core/version.hpp
+
 
 cd ../opencv_contrib
 git checkout --recurse-submodules ${OPENCV_VERSION}
